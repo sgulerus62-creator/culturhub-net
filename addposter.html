@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>Etkinlik Ekle</title>
+  <style>
+    body { font-family: Arial; background:#f0f0f0; padding:20px; }
+    .card { background:#fff; padding:20px; border-radius:8px; max-width:500px; margin:auto; }
+    .field { margin-bottom:15px; }
+    label { display:block; margin-bottom:5px; font-weight:bold; }
+    input, select { width:100%; padding:8px; border:1px solid #ccc; border-radius:6px; }
+    .btn { background:#2563eb; color:#fff; padding:10px; border:none; border-radius:6px; cursor:pointer; }
+    .btn:hover { background:#1d4ed8; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Etkinlik Ekle</h1>
+    <form id="posterForm">
+      <div class="field">
+        <label for="title">Etkinlik Başlığı</label>
+        <input type="text" id="title" required>
+      </div>
+      <div class="field">
+        <label for="country">Ülke</label>
+        <input type="text" id="country" value="İsviçre" required>
+      </div>
+      <div class="field">
+        <label for="city">Kanton</label>
+        <select id="city" required>
+          <option value="">--Kanton seçin--</option>
+          <option value="Aargau">Aargau (AG)</option>
+          <option value="Appenzell Ausserrhoden">Appenzell Ausserrhoden (AR)</option>
+          <option value="Appenzell Innerrhoden">Appenzell Innerrhoden (AI)</option>
+          <option value="Basel-Landschaft">Basel-Landschaft (BL)</option>
+          <option value="Basel-Stadt">Basel-Stadt (BS)</option>
+          <option value="Bern">Bern (BE)</option>
+          <option value="Fribourg">Fribourg (FR)</option>
+          <option value="Genève">Genève (GE)</option>
+          <option value="Glarus">Glarus (GL)</option>
+          <option value="Graubünden">Graubünden (GR)</option>
+          <option value="Jura">Jura (JU)</option>
+          <option value="Luzern">Luzern (LU)</option>
+          <option value="Neuchâtel">Neuchâtel (NE)</option>
+          <option value="Nidwalden">Nidwalden (NW)</option>
+          <option value="Obwalden">Obwalden (OW)</option>
+          <option value="St. Gallen">St. Gallen (SG)</option>
+          <option value="Schaffhausen">Schaffhausen (SH)</option>
+          <option value="Schwyz">Schwyz (SZ)</option>
+          <option value="Solothurn">Solothurn (SO)</option>
+          <option value="Thurgau">Thurgau (TG)</option>
+          <option value="Ticino">Ticino (TI)</option>
+          <option value="Uri">Uri (UR)</option>
+          <option value="Valais">Valais (VS)</option>
+          <option value="Vaud">Vaud (VD)</option>
+          <option value="Zug">Zug (ZG)</option>
+          <option value="Zürich">Zürich (ZH)</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="date">Tarih</label>
+        <input type="date" id="date" required>
+      </div>
+      <div class="field">
+        <label for="time">Saat</label>
+        <input type="time" id="time" required>
+      </div>
+      <div class="field">
+        <label for="poster">Etkinlik Afişi (Resim)</label>
+        <input type="file" id="poster" accept="image/*">
+      </div>
+      <button type="submit" class="btn">Kaydet</button>
+    </form>
+  </div>
+
+  <script>
+    const form = document.getElementById("posterForm");
+    form.addEventListener("submit", e=>{
+      e.preventDefault();
+
+      const event = {
+        title: document.getElementById("title").value,
+        country: document.getElementById("country").value,
+        city: document.getElementById("city").value,
+        date: document.getElementById("date").value,
+        time: document.getElementById("time").value,
+        poster: null
+      };
+
+      const file = document.getElementById("poster").files[0];
+      if(file){
+        const reader = new FileReader();
+        reader.onload = () => {
+          event.poster = reader.result; // Base64 resim
+          saveEvent(event);
+        };
+        reader.readAsDataURL(file);
+      } else {
+        saveEvent(event);
+      }
+
+      function saveEvent(ev){
+        let events = JSON.parse(localStorage.getItem("events")) || [];
+        events.push(ev);
+        localStorage.setItem("events", JSON.stringify(events));
+        alert("Etkinlik başarıyla eklendi!");
+        window.location.href="welcome.html";
+      }
+    });
+  </script>
+</body>
+</html>
