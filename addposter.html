@@ -2,111 +2,182 @@
 <html lang="tr">
 <head>
   <meta charset="UTF-8">
-  <title>Etkinlik Ekle</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CulturHub — Etkinlik Ekle</title>
+
   <style>
-    body { font-family: Arial; background:#f0f0f0; padding:20px; }
-    .card { background:#fff; padding:20px; border-radius:8px; max-width:500px; margin:auto; }
-    .field { margin-bottom:15px; }
-    label { display:block; margin-bottom:5px; font-weight:bold; }
-    input, select { width:100%; padding:8px; border:1px solid #ccc; border-radius:6px; }
-    .btn { background:#2563eb; color:#fff; padding:10px; border:none; border-radius:6px; cursor:pointer; }
-    .btn:hover { background:#1d4ed8; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f2f2f2;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    h2 { text-align: center; }
+
+    label { font-weight: bold; display: block; margin-top: 10px; }
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    #preview {
+      width: 100%;
+      margin-top: 10px;
+      border-radius: 8px;
+      display: none;
+    }
+
+    .btn {
+      width: 100%;
+      margin-top: 20px;
+      padding: 12px;
+      background: #2563eb;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    .btn:hover { background: #1d4ed8; }
   </style>
 </head>
+
 <body>
-  <div class="card">
-    <h1>Etkinlik Ekle</h1>
-    <form id="posterForm">
-      <div class="field">
-        <label for="title">Etkinlik Başlığı</label>
-        <input type="text" id="title" required>
-      </div>
-      <div class="field">
-        <label for="country">Ülke</label>
-        <input type="text" id="country" value="İsviçre" required>
-      </div>
-      <div class="field">
-        <label for="city">Kanton</label>
-        <select id="city" required>
-          <option value="">--Kanton seçin--</option>
-          <option value="Aargau">Aargau (AG)</option>
-          <option value="Appenzell Ausserrhoden">Appenzell Ausserrhoden (AR)</option>
-          <option value="Appenzell Innerrhoden">Appenzell Innerrhoden (AI)</option>
-          <option value="Basel-Landschaft">Basel-Landschaft (BL)</option>
-          <option value="Basel-Stadt">Basel-Stadt (BS)</option>
-          <option value="Bern">Bern (BE)</option>
-          <option value="Fribourg">Fribourg (FR)</option>
-          <option value="Genève">Genève (GE)</option>
-          <option value="Glarus">Glarus (GL)</option>
-          <option value="Graubünden">Graubünden (GR)</option>
-          <option value="Jura">Jura (JU)</option>
-          <option value="Luzern">Luzern (LU)</option>
-          <option value="Neuchâtel">Neuchâtel (NE)</option>
-          <option value="Nidwalden">Nidwalden (NW)</option>
-          <option value="Obwalden">Obwalden (OW)</option>
-          <option value="St. Gallen">St. Gallen (SG)</option>
-          <option value="Schaffhausen">Schaffhausen (SH)</option>
-          <option value="Schwyz">Schwyz (SZ)</option>
-          <option value="Solothurn">Solothurn (SO)</option>
-          <option value="Thurgau">Thurgau (TG)</option>
-          <option value="Ticino">Ticino (TI)</option>
-          <option value="Uri">Uri (UR)</option>
-          <option value="Valais">Valais (VS)</option>
-          <option value="Vaud">Vaud (VD)</option>
-          <option value="Zug">Zug (ZG)</option>
-          <option value="Zürich">Zürich (ZH)</option>
-        </select>
-      </div>
-      <div class="field">
-        <label for="date">Tarih</label>
-        <input type="date" id="date" required>
-      </div>
-      <div class="field">
-        <label for="time">Saat</label>
-        <input type="time" id="time" required>
-      </div>
-      <div class="field">
-        <label for="poster">Etkinlik Afişi (Resim)</label>
-        <input type="file" id="poster" accept="image/*">
-      </div>
-      <button type="submit" class="btn">Kaydet</button>
-    </form>
+
+  <div class="container">
+    <h2>Etkinlik Ekle</h2>
+
+    <label>Etkinlik Başlığı:</label>
+    <input type="text" id="title" required>
+
+    <label>Ülke:</label>
+    <select id="country">
+      <option value="Switzerland">İsviçre</option>
+      <option value="Germany">Almanya</option>
+      <option value="France">Fransa</option>
+      <option value="Italy">İtalya</option>
+      <option value="Austria">Avusturya</option>
+      <option value="Turkey">Türkiye</option>
+      <option value="Spain">İspanya</option>
+      <option value="UK">Birleşik Krallık</option>
+    </select>
+
+    <label>Kanton (Şehir):</label>
+    <select id="city">
+      <option value="Aargau">Aargau</option>
+      <option value="Appenzell Ausserrhoden">Appenzell Ausserrhoden</option>
+      <option value="Appenzell Innerrhoden">Appenzell Innerrhoden</option>
+      <option value="Basel-Landschaft">Basel-Landschaft</option>
+      <option value="Basel-Stadt">Basel-Stadt</option>
+      <option value="Bern">Bern</option>
+      <option value="Fribourg">Fribourg</option>
+      <option value="Genève">Genève</option>
+      <option value="Glarus">Glarus</option>
+      <option value="Graubünden">Graubünden</option>
+      <option value="Jura">Jura</option>
+      <option value="Luzern">Luzern</option>
+      <option value="Neuchâtel">Neuchâtel</option>
+      <option value="Nidwalden">Nidwalden</option>
+      <option value="Obwalden">Obwalden</option>
+      <option value="St. Gallen">St. Gallen</option>
+      <option value="Schaffhausen">Schaffhausen</option>
+      <option value="Schwyz">Schwyz</option>
+      <option value="Solothurn">Solothurn</option>
+      <option value="Thurgau">Thurgau</option>
+      <option value="Ticino">Ticino</option>
+      <option value="Uri">Uri</option>
+      <option value="Valais">Valais</option>
+      <option value="Vaud">Vaud</option>
+      <option value="Zug">Zug</option>
+      <option value="Zürich">Zürich</option>
+    </select>
+
+    <label>Afiş Yükle:</label>
+    <input type="file" id="poster" accept="image/*" onchange="previewPoster()">
+
+    <img id="preview">
+
+    <label>Tarih:</label>
+    <input type="date" id="date">
+
+    <label>Saat:</label>
+    <input type="time" id="time">
+
+    <button class="btn" onclick="saveEvent()">Kaydet</button>
   </div>
 
   <script>
-    const form = document.getElementById("posterForm");
-    form.addEventListener("submit", e=>{
-      e.preventDefault();
-
-      const event = {
-        title: document.getElementById("title").value,
-        country: document.getElementById("country").value,
-        city: document.getElementById("city").value,
-        date: document.getElementById("date").value,
-        time: document.getElementById("time").value,
-        poster: null
-      };
-
+    function previewPoster(){
       const file = document.getElementById("poster").files[0];
+      const preview = document.getElementById("preview");
+
       if(file){
         const reader = new FileReader();
-        reader.onload = () => {
-          event.poster = reader.result; // Base64 resim
-          saveEvent(event);
+        reader.onload = function(e){
+          preview.src = e.target.result;
+          preview.style.display = "block";
         };
         reader.readAsDataURL(file);
-      } else {
-        saveEvent(event);
+      }
+    }
+
+    function toBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = error => reject(error);
+      });
+    }
+
+    async function saveEvent(){
+      const title = document.getElementById("title").value.trim();
+      const country = document.getElementById("country").value;
+      const city = document.getElementById("city").value;
+      const date = document.getElementById("date").value;
+      const time = document.getElementById("time").value;
+      const posterFile = document.getElementById("poster").files[0];
+
+      if(!title || !country || !city || !date || !time){
+        alert("Lütfen tüm alanları doldurun.");
+        return;
       }
 
-      function saveEvent(ev){
-        let events = JSON.parse(localStorage.getItem("events")) || [];
-        events.push(ev);
-        localStorage.setItem("events", JSON.stringify(events));
-        alert("Etkinlik başarıyla eklendi!");
-        window.location.href="welcome.html";
+      let posterBase64 = "";
+      if(posterFile){
+        posterBase64 = await toBase64(posterFile);
       }
-    });
+
+      let events = JSON.parse(localStorage.getItem("events")) || [];
+
+      events.push({
+        title,
+        country,
+        city,
+        date,
+        time,
+        poster: posterBase64
+      });
+
+      localStorage.setItem("events", JSON.stringify(events));
+
+      alert("Etkinlik başarıyla eklendi!");
+      window.location.href = "welcome.html";
+    }
   </script>
+
 </body>
 </html>
